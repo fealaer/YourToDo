@@ -1,0 +1,29 @@
+{
+  "name": "andrey-pushkarev-project",
+  "version": "0.0.1",
+  "testPath": "test/client/spec",
+  "appPath": "client",
+  "dependencies": {
+    "angular": "~1.2.0",
+    "json3": "~3.2.4",
+    "jquery": "~1.10.0",
+    "sass-bootstrap": "~3.0.0",
+    "es5-shim": "~2.1.0",
+    "angular-resource": "~1.2.0",
+    "angular-cookies": "~1.2.0",
+    "angular-sanitize": "~1.2.0",
+    "angular-route": "~1.2.0",
+    "angular-bootstrap": "~0.6.0",
+    "angular-local-storage": "*",
+    "blueimp-gallery": "~2.12.4",
+    "marked": "~0.3.0",
+    "blueimp-file-upload": "~9.5.2",
+    "blueimp-load-image": "~1.11.0",
+    "jquery-ui": "~1.10.3",
+    "angular-ui-sortable": "angular1.2"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.0",
+    "angular-scenario": "~1.2.0"
+  }
+}
