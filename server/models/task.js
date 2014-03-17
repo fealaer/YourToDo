@@ -14,11 +14,10 @@ var schema = new Schema({
   },
   priority: {
     type: String,
-    enum: ['none', 'now', 'high', 'medium', 'low']
+    enum: ['now', 'high', 'medium', 'low']
   },
   status: {
-    type: String,
-    enum: ['none', 'in progress', 'done']
+    type: Boolean
   }
 }, { versionKey: false });
 
