@@ -1,0 +1,83 @@
+/* Sticky footer */
+
+html,
+body {
+    height: 100%;
+    /* The html and body elements cannot have any padding or margin. */
+}
+
+#wrap .container {
+    padding: 60px 15px 0;
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+    min-height: 100%;
+    height: auto;
+    /* Negative indent footer by its height */
+    margin: 0 auto -60px;
+    /* Pad bottom by footer height */
+    padding: 0 0 60px;
+}
+
+/* Set the fixed height of the footer here */
+.footer {
+    height: 60px;
+    padding-top: 0;
+    border-top: 1px solid #e5e5e5;
+}
+
+.footer div.container > .text-muted {
+    margin: 19px 0;
+    color: #428bca;
+}
+
+#wrap .container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+@media (min-width: 760px) {
+    .container {
+        max-width: 98%;
+    }
+}
+
+.markdown-preview {
+    background-color: #eeeeee;
+    overflow: scroll;
+}
+
+.container .markdown-preview {
+  border-radius: 6px;
+}
+
+.markdown-editor {
+    height: 100%;
+    resize: none;
+    padding: 19px;
+}
+
+.markdown-wrapper {
+    padding-top: 10px;
+}
+
+/* Fixes display of rendered syntax highlighting in preview pane */
+.markdown-preview pre {
+  background-color: black;
+}
+.markdown-preview pre, .preview code {
+  overflow: auto;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+/* Fixes display of rendered ordered lists in preview pane */
+ol.linenums > li {
+  list-style-type: decimal;
+}
+
+.sortable-images { list-style-type: none; margin: 0; padding: 0;}
+.sortable-images li { margin: 3px 3px 3px 0; padding: 1px; float: left; width: 120px; height: 90px; font-size: 4em; text-align: center;}
+.sortable-images li img { border-color: red; border-width: 2px;}
+.sortable-images li img.selected-for-gallery { border-color: #4cae4c; border-width: 2px;}

@@ -1,0 +1,28 @@
+{
+  "port": 3000,
+  "mongoose": {
+    "uri": "mongodb://localhost/todo",
+    "options": {
+      "server": {
+        "auto_reconnect": false,
+        "socketOptions": {
+          "keepAlive": 1
+        }
+      }
+    }
+  },
+  "session": {
+    "secret": "KillerIsJim",
+    "key": "sid",
+    "rolling": true,
+    "cookie": {
+      "path": "/",
+      "httpOnly": true,
+      "maxAge": 3600000
+    }
+  },
+  "security": {
+      "tokenLife" : 3600
+  },
+  "cookieSecret": "CatchMeIfYouCan"
+}
