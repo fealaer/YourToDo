@@ -1,0 +1,16 @@
+<form name="signInForm" class="form-signin" novalidate="">
+    <h2 class="form-signin-heading">Log in or Sign up!</h2>
+    <input type="text" class="form-control" ng-model="data.username" ng-change="changedUsername=true" name="username" placeholder="Username" required="" autofocus="">
+    <input type="password" class="form-control" ng-model="data.password" ng-change="changedPassword=true" name="password" placeholder="Password" required="">
+    <div class="alert alert-danger" ng-show="(changedUsername || submitted) && signInForm.username.$error.required">
+        <strong>Error!</strong> Please fill out username.
+    </div>
+    <div class="alert alert-danger" ng-show="(changedPassword || submitted) && signInForm.password.$error.required">
+        <strong>Error!</strong> Please fill out password.
+    </div>
+    <div class="alert alert-danger" ng-show="submitted && error.error">
+        <strong>Error!</strong> {{error.message}}
+    </div>
+    <button class="btn btn-lg btn-success pull-left" ng-click="submitted=true; logInBtn(data);" ng-disabled="signInForm.$invalid || isUnchanged(data)">Log in</button>
+    <button class="btn btn-lg btn-success pull-right" ng-click="submitted=true; signUpBtn(data);" ng-disabled="signInForm.$invalid || isUnchanged(data)">Sign up</button>
+</form>
