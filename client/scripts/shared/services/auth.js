@@ -18,7 +18,7 @@ angular.module('sharedApp')
             if (result.status.code !== 200) {
               callback(result.error, null);
             } else {
-              Auth.prototype.createToken(data, function(err){
+              Auth.prototype.createToken(data, function (err) {
                 if (err) {
                   callback(err, null);
                 } else {
@@ -35,13 +35,13 @@ angular.module('sharedApp')
             if (result.status.code !== 200) {
               callback(result.error, null);
             } else {
-              Auth.prototype.createToken(data, function(err){
+              Auth.prototype.createToken(data, function (err) {
                 if (err) {
                   callback(err, null);
                 } else {
                   localStorageService.set('user', result.result);
-                  Auth.prototype.broadcast();
                   callback(null, result.result);
+                  Auth.prototype.broadcast();
                 }
               });
             }
@@ -53,8 +53,7 @@ angular.module('sharedApp')
             if (result.status.code !== 200) {
               callback(result.error, null);
             } else {
-              localStorageService.remove('user');
-              localStorageService.remove('tokens');
+              clearAuthData();
               Auth.prototype.broadcast();
               callback(null, result.result);
             }
@@ -98,7 +97,28 @@ angular.module('sharedApp')
         Auth.prototype.broadcast = function () {
           $rootScope.$broadcast(Auth.eventName);
         };
+        Auth.prototype.getToken = function (callback) {
+          var tokens = localStorageService.get('tokens');
+          if (!tokens) {
+            callback({}, null);
+          } else if (tokens.expired_at < (new Date()).getTime()) {
+            Auth.prototype.refreshToken(function(err, res) {
+              if (err) {
+                callback(err, null);
+              } else {
+                callback(null, res.token_type + ' ' + res.access_token);
+              }
+            });
+          } else {
+            callback(null, tokens.token_type + ' ' + tokens.access_token);
+          }
+        };
         function expiredAt(expires_in) {
-          return new Date((new Date()).getTime() + (expires_in - 300) * 1000);
+          return (new Date((new Date()).getTime() + (expires_in - 300) * 1000)).getTime();
+        }
+
+        function clearAuthData() {
+          localStorageService.remove('user');
+          localStorageService.remove('tokens');
         }
       }]);

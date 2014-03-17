@@ -8,7 +8,6 @@ angular.module('mainApp')
           $scope.user = Auth.getUser();
         });
 
-
         $scope.signOutBtn = function () {
           Auth.signOut(function (err, res) {
             if (err) {
@@ -18,47 +17,77 @@ angular.module('mainApp')
             }
           });
         };
+        var defaultTask = {
+          userId: $scope.user._id,
+          task: '',
+          priority: 'low',
+          status: false
+        };
+
         $scope.tasks = [];
 
-
-        $scope.submit = function (data, type) {
-          switch (type) {
-            case 'add':
-              $scope.add(data);
-              break;
-            case 'edit':
-              $scope.edit(data);
-              break;
+        $scope.submit = function (data) {
+          if (!data._id) {
+            $scope.add(data);
+          } else {
+            $scope.edit(data);
           }
         };
 
         $scope.add = function (data) {
-          var newPage = new Tasks(data);
-          newPage.$save().then(function (api) {
-            if (api.status.code === 200) {
-              // TODO add msg for user
-              $location.path($location.path() + '/' + api.result.path + '/edit');
-            }
+          data.userId = $scope.user._id;
+          var headers = {};
+          Auth.getToken(function (err, res) {
+            if (!err) headers = {Authorization: res};
+            Tasks(headers).save(data).$promise.then(function (api) {
+              if (api.status.code === 200) {
+                $scope.tasks.pop();
+                $scope.tasks.push(api.result);
+                $scope.tasks.push(angular.copy(defaultTask));
+              }
+            });
           });
         };
 
         $scope.edit = function (data) {
-          Tasks.update(data).$promise.then(function (api) {
-            if (api.status.code === 200) {
-              // TODO add msg for user
-              refresh();
-            }
+          var headers = {};
+          Auth.getToken(function (err, res) {
+            if (!err) headers = {Authorization: res};
+            Tasks(headers).update(data).$promise.then(function (api) {
+              if (api.status.code === 200) {
+
+              }
+            });
           });
         };
 
         $scope.delete = function (data) {
-          Tasks.delete({_id: data._id}).$promise.then(function (api) {
-            if (api.status.code === 200) {
-              // TODO add msg for user
-              $location.path('/tasks');
-            }
+          var headers = {};
+          Auth.getToken(function (err, res) {
+            if (!err) headers = {Authorization: res};
+            Tasks(headers).delete({_id: data._id, userId: $scope.user._id}).$promise.then(function (api) {
+              if (api.status.code === 200) {
+                var i = $scope.tasks.indexOf(data);
+                if (i != -1) {
+                  $scope.tasks.splice(i, 1);
+                }
+              }
+            });
           });
         };
+        function refresh() {
+          var headers = {};
+          Auth.getToken(function (err, res) {
+            if (!err) headers = {Authorization: res};
+            Tasks(headers).queryByField({field: 'userId', value: $scope.user._id}).$promise.then(function (api) {
+              if (api.status.code === 200) {
+                $scope.tasks = api.result;
+                $scope.tasks.push(angular.copy(defaultTask));
+              }
+            });
+          });
+        }
 
+        refresh();
 
       }]);

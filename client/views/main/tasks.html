@@ -1,7 +1,45 @@
-<div class="auth">
-    <button ng-show="user.username" ng-click="signOutBtn()"
-        class="btn btn-warning btn-auth pull-right">Sign out</button>
+<div class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <strong class="navbar-brand">{{user.username}}'s ToDo List</strong>
+    </div>
+    <div class="navbar-collapse collapse">
+        <div class="auth">
+            <button ng-show="user.username" ng-click="signOutBtn()"
+                    class="btn btn-warning btn-auth pull-right">Sign out
+            </button>
+        </div>
+    </div>
 </div>
-<div>
-
+<div class="tasks">
+    <form name="taskForm" class="form-inline" role="form"
+          ng-repeat="task in tasks">
+        <div class="input-group">
+            <select class="form-control" ng-model="task.priority" ng-change="changed=true">
+                <option>low</option>
+                <option>medium</option>
+                <option>high</option>
+                <option>now</option>
+            </select>
+            <span class="input-group-addon">
+                <input type="checkbox" ng-model="task.status" ng-change="changed=true">
+            </span>
+            <input type="text" class="form-control" ng-model="task.task"
+                   placeholder="Task" required ng-change="changed=true">
+            <span class="input-group-btn">
+                <button ng-disabled="taskForm.$invalid || !changed"
+                        class="btn btn-success"
+                        ng-click="changed=false; submit(task)">Save</button>
+                <button ng-disabled="{{task._id === undefined}}"
+                        class="btn btn-danger"
+                        ng-click="delete(task)">Del</button>
+            </span>
+        </div>
+    </form>
 </div>
