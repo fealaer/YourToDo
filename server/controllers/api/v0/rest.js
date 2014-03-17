@@ -59,6 +59,22 @@ function RestApi(_Model) {
     }
   };
 
+  this.queryByField = function (req, res, next) {
+    var field = req.params.field;
+    var value = req.params.value;
+    if (!(field && value)) {
+      res.json(new JsonResponse(new JsonError(null, 400, 'You need specify parameter and value'), null));
+    } else {
+      Model.find(select(field, value), function (err, records) {
+        if (err) {
+          res.json(new JsonResponse(new JsonError(err), null));
+        } else {
+          res.json(new JsonResponse(null, records));
+        }
+      });
+    }
+  };
+
   this.post = function (req, res, next) {
     var rawData = req.body.data || req.body;
     delete rawData._id;
