@@ -148,6 +148,7 @@ body {
 
 /* Wrapper for page content to push down footer */
 #wrap {
+    max-width: 640px;
     min-height: 100%;
     height: auto;
     /* Negative indent footer by its height */
@@ -158,12 +159,15 @@ body {
 
 /* Set the fixed height of the footer here */
 .footer {
+    max-width: 640px;
+    margin: 0 auto;
     height: 60px;
     padding-top: 0;
     border-top: 1px solid #e5e5e5;
 }
 
 .footer div.container > .text-muted {
+    text-align: center;
     margin: 19px 0;
     color: #428bca;
 }
@@ -171,7 +175,7 @@ body {
 /* Signin form */
 
 .form-signin {
-  max-width: 330px;
+  max-width: 640px;
   padding: 15px;
   margin: 0 auto;
 }
@@ -203,4 +207,8 @@ body {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+.auth {
+    margin: 9px;
 }
